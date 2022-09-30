@@ -2,14 +2,13 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-import { MdOutlineMailOutline } from "react-icons/md";
-import { HiLockClosed } from "react-icons/hi";
 import { FormEventHandler, useState } from "react";
 
 import { FcGoogle } from "react-icons/fc";
 
 const Login: NextPage = () => {
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+  const [message, setMessage] = useState(null);
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -91,7 +90,7 @@ const Login: NextPage = () => {
             <button>Forgot Password</button>
             <span>|</span>
 
-            <button type="submit" onClick={() => router.push("/signup")}>
+            <button type="submit" onClick={() => router.push("/auth/signup")}>
               Sign Up
             </button>
           </div>

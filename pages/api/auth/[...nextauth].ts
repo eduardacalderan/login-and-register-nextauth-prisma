@@ -5,7 +5,6 @@ import GoogleProvider from "next-auth/providers/google";
 
 import bcrypt from "bcrypt";
 import prisma from "lib/prisma";
-import axios from "axios";
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
 export default authHandler;
@@ -36,26 +35,31 @@ const options: NextAuthOptions = {
       },
 
       authorize: async (credentials) => {
+        const email = credentials?.email;
+        const password = credentials?.password;
+
         const dbUser = await prisma.user.findUnique({
-          where: { email: credentials?.email },
+          where: { email: email },
           select: { email: true, username: true, password: true, name: true },
         });
 
-        console.log(credentials); //bcrypt is missing
-
         if (!dbUser) {
-          console.log(`No user with email ${credentials?.email}`);
+          throw new Error(`No user with email ${email}`);
         }
 
         if (dbUser) {
-          if (dbUser.password === credentials?.password) {
+          const comparePW = await bcrypt.compare(
+            password || "",
+            dbUser.password || ""
+          );
+
+          if (comparePW) {
             return dbUser;
           } else {
-            console.log(`incorrect password for ${dbUser.username}`);
+            console.log(`Incorrect password for ${dbUser.username}`);
           }
         }
 
-        // const hash = await bcrypt.hash(credentials.password, 10);
         return null;
       },
     }),
