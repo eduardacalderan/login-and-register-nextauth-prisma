@@ -11,6 +11,15 @@ export default async function handler(
     where: { email: body.email },
   });
 
+  const userByUsername = await prisma.user.findUnique({
+    where: { username: body.username },
+  });
+
+  if (userByUsername) {
+    console.log("Username already exist");
+    return;
+  }
+
   if (
     body.first_name === null ||
     body.first_name === undefined ||
@@ -26,6 +35,15 @@ export default async function handler(
     body.last_name === ""
   ) {
     console.log("Last name is missing");
+    return;
+  }
+
+  if (
+    body.username === null ||
+    body.username === undefined ||
+    body.username === ""
+  ) {
+    console.log("Username is missing");
     return;
   }
 
@@ -55,7 +73,7 @@ export default async function handler(
       first_name: body.first_name,
       last_name: body.last_name,
       name: body.first_name + " " + body.last_name,
-      username: body.first_name.toLowerCase() + body.last_name.toLowerCase(),
+      username: body.username,
       email: body.email,
       password: hash,
     },

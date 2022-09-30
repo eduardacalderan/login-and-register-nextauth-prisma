@@ -8,6 +8,7 @@ const Login: NextPage = () => {
   const [userInfo, setUserInfo] = useState({
     first_name: "",
     last_name: "",
+    username: "",
     email: "",
     password: "",
   });
@@ -24,6 +25,7 @@ const Login: NextPage = () => {
       body: JSON.stringify({
         first_name: userInfo.first_name,
         last_name: userInfo.last_name,
+        username: userInfo.username,
         email: userInfo.email,
         password: userInfo.password,
       }),
@@ -32,7 +34,7 @@ const Login: NextPage = () => {
     const data = await res.json();
 
     if (data.message) {
-      setMessage(message);
+      setMessage(data.message);
     }
 
     if (data.message === "User registered successfully") {
@@ -67,6 +69,16 @@ const Login: NextPage = () => {
               value={userInfo.last_name}
               onChange={({ target }) =>
                 setUserInfo({ ...userInfo, last_name: target.value })
+              }
+            />
+
+            <input
+              type="text"
+              placeholder="Username"
+              className="rounded-full border border-slate-100 py-3 px-6 pl-14 mb-4 w-80	relative ... outline-neutral-200"
+              value={userInfo.username}
+              onChange={({ target }) =>
+                setUserInfo({ ...userInfo, username: target.value })
               }
             />
 
