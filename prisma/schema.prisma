@@ -18,6 +18,8 @@ model User {
   image         String?
   password      String?
   resetToken    String?
+  emailToken    String?
+  update        String?
 
   @@map("users")
 }
