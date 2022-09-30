@@ -5,7 +5,12 @@ import { signIn } from "next-auth/react";
 import { FormEventHandler, useState } from "react";
 
 const Login: NextPage = () => {
-  const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+  const [userInfo, setUserInfo] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+  });
   const [message, setMessage] = useState(null);
   const router = useRouter();
 
@@ -17,6 +22,8 @@ const Login: NextPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        first_name: userInfo.first_name,
+        last_name: userInfo.last_name,
         email: userInfo.email,
         password: userInfo.password,
       }),
@@ -25,7 +32,7 @@ const Login: NextPage = () => {
     const data = await res.json();
 
     if (data.message) {
-      setMessage(data.message);
+      setMessage(message);
     }
 
     if (data.message === "User registered successfully") {
@@ -44,6 +51,25 @@ const Login: NextPage = () => {
           <p className="mt-2 mb-8">Welcome</p>
 
           <form onSubmit={handleSubmit} className="flex flex-col">
+            <input
+              type="text"
+              placeholder="First Name"
+              className="rounded-full border border-slate-100 py-3 px-6 pl-14 mb-4 w-80	relative ... outline-neutral-200"
+              value={userInfo.first_name}
+              onChange={({ target }) =>
+                setUserInfo({ ...userInfo, first_name: target.value })
+              }
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              className="rounded-full border border-slate-100 py-3 px-6 pl-14 mb-4 w-80	relative ... outline-neutral-200"
+              value={userInfo.last_name}
+              onChange={({ target }) =>
+                setUserInfo({ ...userInfo, last_name: target.value })
+              }
+            />
+
             <input
               type="email"
               placeholder="Email Address"

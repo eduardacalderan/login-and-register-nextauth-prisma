@@ -40,7 +40,14 @@ const options: NextAuthOptions = {
 
         const dbUser = await prisma.user.findUnique({
           where: { email: email },
-          select: { email: true, username: true, password: true, name: true },
+          select: {
+            email: true,
+            username: true,
+            password: true,
+            name: true,
+            first_name: true,
+            last_name: true,
+          },
         });
 
         if (!dbUser) {
