@@ -4,12 +4,12 @@ This is a [Next.js](https://nextjs.org/) project developed using [next-auth with
 
 **RF**
 
-- Must be possible to create a new account.
+- Must be possible to register a new account.
 
 **RN**
 
-- Must not be possible to create an account with an already existing email in the application;
-- Must not be possible authenticate an user if your email is nonexistent;
+- Must not be possible to register an account with an already existing email in the application;
+- Must not be possible to register an user if your email is nonexistent;
 - All users must be registered with first name, last name, email and password.
 
 # User Authentication
