@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 
 import { FormEventHandler, useState } from "react";
 
@@ -11,11 +12,16 @@ const Login: NextPage = () => {
     username: "",
     email: "",
     password: "",
+    comparePasswords: "",
   });
-  const [message, setMessage] = useState(null);
   const router = useRouter();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    if (userInfo.password !== userInfo.comparePasswords) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+
     // validate your userinfo
     const res = await fetch("/api/user/register", {
       method: "POST",
@@ -28,21 +34,23 @@ const Login: NextPage = () => {
         username: userInfo.username,
         email: userInfo.email,
         password: userInfo.password,
+        comparePasswords: userInfo.comparePasswords,
       }),
     });
 
     const data = await res.json();
+    toast.success(data.message);
 
-    if (data.message) {
-      setMessage(data.message);
-    }
+    // if (data.message) {
+    //   setMessage(data.message);
+    // }
 
-    if (data.message === "User registered successfully") {
-      const options = { redirect: false };
+    // if (data.message === "User registered successfully") {
+    //   const options = { redirect: false };
 
-      const res = await signIn("credentials", options);
-      return router.push("/");
-    }
+    //   const res = await signIn("credentials", options);
+    //   return router.push("/");
+    // }
   };
 
   return (
@@ -99,6 +107,16 @@ const Login: NextPage = () => {
               value={userInfo.password}
               onChange={({ target }) =>
                 setUserInfo({ ...userInfo, password: target.value })
+              }
+            />
+
+            <input
+              type="password"
+              placeholder="Password"
+              className=" rounded-full border border-slate-100 py-3 px-6 pl-14 mb-4 w-80 outline-neutral-200"
+              value={userInfo.comparePasswords}
+              onChange={({ target }) =>
+                setUserInfo({ ...userInfo, comparePasswords: target.value })
               }
             />
 
