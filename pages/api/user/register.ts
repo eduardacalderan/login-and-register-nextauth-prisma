@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 import prisma from "lib/prisma";
+import { toast } from "react-toastify";
 
 export default async function handler(
   req: NextApiRequest,

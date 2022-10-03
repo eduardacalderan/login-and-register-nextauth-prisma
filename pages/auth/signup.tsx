@@ -15,13 +15,24 @@ const Login: NextPage = () => {
     comparePasswords: "",
   });
   const router = useRouter();
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+  const message = () => {
     if (userInfo.password !== userInfo.comparePasswords) {
-      toast.error("Passwords do not match!");
+      console.log("password do not match");
+      toast("Passwords do not match!", {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: "error",
+      });
       return;
     }
 
+    toast("User registered successfully", {
+      hideProgressBar: true,
+      autoClose: 2000,
+      type: "success",
+    });
+  };
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     // validate your userinfo
     const res = await fetch("/api/user/register", {
       method: "POST",
@@ -39,7 +50,6 @@ const Login: NextPage = () => {
     });
 
     const data = await res.json();
-    toast.success(data.message);
 
     // if (data.message) {
     //   setMessage(data.message);
@@ -124,6 +134,7 @@ const Login: NextPage = () => {
               type="submit"
               className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-8 rounded-full mb-6 w-80"
               value="Register"
+              onClick={message}
             >
               Sign up
             </button>
