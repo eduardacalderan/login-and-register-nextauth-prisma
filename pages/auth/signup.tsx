@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
-import { signIn } from "next-auth/react";
-import { toast } from "react-toastify";
+import Router from "next/router";
 
 import { FormEventHandler, useState } from "react";
+
+import { toast } from "react-toastify";
 
 const Login: NextPage = () => {
   const [userInfo, setUserInfo] = useState({
@@ -14,27 +14,92 @@ const Login: NextPage = () => {
     password: "",
     comparePasswords: "",
   });
-  const router = useRouter();
-  const message = () => {
-    if (userInfo.password !== userInfo.comparePasswords) {
-      console.log("password do not match");
-      toast("Passwords do not match!", {
-        hideProgressBar: true,
-        autoClose: 2000,
+
+  const message = async () => {
+    if (
+      userInfo.first_name === null ||
+      userInfo.first_name === undefined ||
+      userInfo.first_name === ""
+    ) {
+      toast("First name is missing", {
+        theme: "colored",
         type: "error",
+        autoClose: 15000,
+      });
+      return;
+    }
+
+    if (
+      userInfo.last_name === null ||
+      userInfo.last_name === undefined ||
+      userInfo.last_name === ""
+    ) {
+      toast("Last name is missing", {
+        theme: "colored",
+        type: "error",
+        autoClose: 15000,
+      });
+      return;
+    }
+
+    if (
+      userInfo.username === null ||
+      userInfo.username === undefined ||
+      userInfo.username === ""
+    ) {
+      toast("Username is missing", {
+        theme: "colored",
+        type: "error",
+        autoClose: 15000,
+      });
+      return;
+    }
+
+    if (
+      userInfo.email === null ||
+      userInfo.email === undefined ||
+      userInfo.email === ""
+    ) {
+      toast("Email is missing", {
+        theme: "colored",
+        type: "error",
+        autoClose: 15000,
+      });
+      return;
+    }
+
+    if (
+      userInfo.password === null ||
+      userInfo.password === undefined ||
+      userInfo.password === ""
+    ) {
+      toast("Password is missing", {
+        theme: "colored",
+        type: "error",
+        autoClose: 15000,
+      });
+      return;
+    }
+
+    if (userInfo.password !== userInfo.comparePasswords) {
+      toast("Passwords do not match!", {
+        theme: "colored",
+        type: "error",
+        autoClose: 15000,
       });
       return;
     }
 
     toast("User registered successfully", {
-      hideProgressBar: true,
-      autoClose: 2000,
+      theme: "colored",
       type: "success",
+      autoClose: 15000,
     });
   };
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     // validate your userinfo
-    const res = await fetch("/api/user/register", {
+    await fetch("/api/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,19 +113,7 @@ const Login: NextPage = () => {
         comparePasswords: userInfo.comparePasswords,
       }),
     });
-
-    const data = await res.json();
-
-    // if (data.message) {
-    //   setMessage(data.message);
-    // }
-
-    // if (data.message === "User registered successfully") {
-    //   const options = { redirect: false };
-
-    //   const res = await signIn("credentials", options);
-    //   return router.push("/");
-    // }
+    return await Router.push("/auth/signin");
   };
 
   return (

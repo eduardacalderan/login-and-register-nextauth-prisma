@@ -10,7 +10,7 @@ This is a [Next.js](https://nextjs.org/) project developed using [next-auth with
 
 - Must not be possible to register an account with an already existing email in the application;
 - Must not be possible to register a user if your email is nonexistent;
-- All users must be registered with first name, last name, email and password.
+- All users must be registered with first name, last name, username, email and password.
 
 # User Authentication
 

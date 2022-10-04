@@ -9,18 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^4.3.1",
+    "@prisma/client": "^4.4.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "jsonwebtoken": "^8.5.1",
     "loglevel": "^1.8.0",
     "loglevel-plugin-prefix": "^0.8.4",
-    "next": "12.2.5",
+    "next": "^12.2.5",
     "next-absolute-url": "^1.2.2",
     "next-auth": "^4.10.3",
     "nodemailer": "^6.8.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
     "react-toastify": "^9.0.8"
   },
@@ -35,8 +35,24 @@
     "eslint": "8.22.0",
     "eslint-config-next": "12.2.5",
     "postcss": "^8.4.16",
-    "prisma": "^4.3.1",
+    "prisma": "^4.4.0",
     "tailwindcss": "^3.1.8",
     "typescript": "4.7.4"
-  }
+  },
+  "description": "This is a [Next.js](https://nextjs.org/) project developed using [next-auth with credentials](https://next-auth.js.org/providers/credentials) to register and authenticate user",
+  "main": "next.config.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eduardacalderan/login_and_register.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eduardacalderan/login_and_register/issues"
+  },
+  "homepage": "https://github.com/eduardacalderan/login_and_register#readme"
 }
