@@ -17,7 +17,7 @@ export default async function handler(
   });
 
   if (userByUsername) {
-    console.log("Username already exist");
+    res.status(422).json({ message: "Username already exist" });
     return;
   }
 
@@ -26,7 +26,7 @@ export default async function handler(
     body.first_name === undefined ||
     body.first_name === ""
   ) {
-    console.log("First name is missing");
+    res.status(422).json({ message: "First name is missing" });
     return;
   }
 
@@ -35,7 +35,7 @@ export default async function handler(
     body.last_name === undefined ||
     body.last_name === ""
   ) {
-    console.log("Last name is missing");
+    res.status(422).json({ message: "Last name is missing" });
     return;
   }
 
@@ -44,12 +44,12 @@ export default async function handler(
     body.username === undefined ||
     body.username === ""
   ) {
-    console.log("Username is missing");
+    res.status(422).json({ message: "Username is missing" });
     return;
   }
 
   if (body.email === null || body.email === undefined || body.email === "") {
-    console.log("email is missing");
+    res.status(422).json({ message: "email is missing" });
     return;
   }
 
@@ -58,7 +58,7 @@ export default async function handler(
     body.password === undefined ||
     body.password === ""
   ) {
-    console.log("password is missing");
+    res.status(422).json({ message: "password is missing" });
     return;
   }
 
